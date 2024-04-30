@@ -1,12 +1,15 @@
-const loginPageSelectors = {
-    userNameField: "[name='username']",
-    passwordField: "[name='password']",
-    loginButtom: ".oxd-button",
-    wrongCredentialAlert: "[role='alert']"
-}
-
 class LoginPage{
 
+    selectorsList(){
+
+        const loginPageSelectors = {
+            userNameField: "[name='username']",
+            passwordField: "[name='password']",
+            loginButtom: ".oxd-button",
+            wrongCredentialAlert: "[role='alert']"
+        }
+        return loginPageSelectors
+    }
        
 
     accessLoginPage (){
@@ -14,9 +17,13 @@ class LoginPage{
     }
 
     loginWithUser (username, password){
-        cy.get(loginPageSelectors.userNameField).type(username)
-        cy.get(loginPageSelectors.passwordField).type(password)
+        cy.get(this.selectorsList().userNameField).type(username)
+        cy.get(this.selectorsList().passwordField).type(password)
         cy.get('.oxd-button').click()
+    }
+
+    checkAccessInvalid(){
+        cy.get(this.selectorsList().wrongCredentialAlert)
     }
 
 

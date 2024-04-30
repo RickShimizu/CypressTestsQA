@@ -3,6 +3,11 @@ import DashboardPage from "../pages/dashboardPage"
 import MyInfoPage from "../pages/myInfoPage"
 import MenuPage from "../pages/menuPage"
 
+var Chance = require('chance');
+
+var chance = new Chance();
+
+
 const menuPage = new MenuPage()
 const loginPage = new LoginPage()
 const dashboardPage = new DashboardPage()
@@ -47,6 +52,11 @@ describe('Orange HRM Test', () => {
     loginPage.loginWithUser(userData.userSuccess.username,userData.userSuccess.password)
     dashboardPage.checkDashboardPage()
     menuPage.accessMyinfo()
+    myInfoPage.fillPersonalDetails(chance.first(),chance.last())
+    myInfoPage.fillEmpoyeeDetails(chance.integer({ min: 0, max: 20 }),chance.integer({ min: 0, max: 20 })
+    ,chance.integer({ min: 0, max: 20 }),"1997-19-09")
+    myInfoPage.fillStatus()
+    myInfoPage.saveForm()
    
 
     // myInfoPage.fillUpForms("rick","inada","engineer","other","4","1997-19-09")
@@ -79,13 +89,10 @@ describe('Orange HRM Test', () => {
   })
 
   it('Login - Fail', () => {
-
-    cy.visit('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login')
-    cy.get(selectorList.userData.userFail.username).type('Ad')
-    cy.get(selectorList.userData.userFail.password).type('a3')
-    cy.get(selectorList.loginButtom).click()
-    cy.get("[role='alert']")
-
+    loginPage.accessLoginPage()
+    loginPage.loginWithUser(userData.userFail.username,userData.userFail.password)
+    loginPage.checkAccessInvalid()
+    
   })
 
 })

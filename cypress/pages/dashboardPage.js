@@ -1,12 +1,15 @@
-const dashboardPageSelectors = {
-    dashBoardGrid: ".orangehrm-dashboard-grid"
-}
-
 class DashboardPage {
 
+    selectorsList (){
+
+        const dashboardPageSelectors = {
+            dashBoardGrid: ".orangehrm-dashboard-grid"
+        }
+        return dashboardPageSelectors
+    }
     checkDashboardPage (){
         cy.location('pathname').should('equal', '/web/index.php/dashboard/index')
-        cy.get(dashboardPageSelectors.dashBoardGrid)
+        cy.get(this.selectorsList().dashBoardGrid)
     }
 
 }
